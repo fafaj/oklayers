@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TDMap</title>
+	
+    <meta http-equiv="keywords" content="OkLayers">
+    <meta http-equiv="description" content="OkLayers page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<style>
+			body{
+				width: 100%;
+				height: 100%;
+			}
+			#oklayers-div{
+				width: 100%;
+				height: 600px;
+			}
+		</style>
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+		<link rel="stylesheet" href="https://js.arcgis.com/3.22/dijit/themes/claro/claro.css">
+		<link rel="stylesheet" href="https://js.arcgis.com/3.22/esri/css/esri.css">
+		<script src="https://js.arcgis.com/3.22/"></script>
+		<script type="text/javascript" src="../dist/oklayers-ag3-v0.1.5.js"></script>
+		<script type="text/javascript" src="../dist/oklayers-webtileinfo.js"></script>
+		<script type="text/javascript">
+			//关闭Esri的跨域检测
+			esri.config.defaults.io.corsDetection=false;
+			//创建OkLayers对象,创建配置
+			var okLayers = new OkLayers({
+				global:{
+				mapDivId: "oklayers-div"
+				,defLoad: "dynamicMap"
+				,defLon: 112.64752
+				,defLat: 24.471443
+				,defScale: 30000
+				,wkid: 4326
+				,showAll: true
+			},
+			layers:[
+				{alias: "tdmap1"
+					,url: "http://\${subDomain}.tianditu.com/DataServer?T=vec_c&X=\${col}&Y=\${row}&L=\${level}"
+					,loadType: "webTiledLayer"
+					,basemap: true
+					,webTileOptions: {id:"tdmap1", subDomains: ["t0", "t1", "t2"]}
+					,webTileInfoObj: webTileInfoObj //调用页面引用 oklayers-webtileinfo.js
+				},
+				{alias: "tdmap2"
+				,url: "http://\${subDomain}.tianditu.com/DataServer?T=cva_c&X=\${col}&Y=\${row}&L=\${level}"
+				,loadType: "webTiledLayer"
+				,basemap: true
+				,webTileOptions: {id:"tdmap2", subDomains: ["t0", "t1", "t2"]}
+				,webTileInfoObj: webTileInfoObj //调用页面引用 oklayers-webtileinfo.js
+				}
+			]
+		});
+		//执行初始化方法
+		okLayers.initMap();
+		</script>
+  </head>
+  
+  <body>
+    <div id="oklayers-div"></div>
+  </body>
+</html>
